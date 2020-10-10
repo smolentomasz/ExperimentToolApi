@@ -13,13 +13,16 @@ namespace ExperimentToolApi.Models
         public int Id {get;set;}
         [Required]
         [DataMember]
+        public int MaterialId {get;set;}
+        [Required]
+        [DataMember]
+        public Material Material {get;set;}
+        [Required]
+        [DataMember]
         public string Title {get;set;}
         [Required]
         [DataMember]
         public string Description {get;set;}
-        [Required]
-        [DataMember]
-        public string Material {get;set;}
         [Required]
         [DataMember]
         public string TestAuthor {get;set;}
