@@ -21,19 +21,19 @@ namespace ExperimentToolApi.Models
         public int AttemptNumber {get;set;}
         [Required]
         [DataMember]
-        public double Elongation {get;set;}
+        public decimal Elongation {get;set;}
         [Required]
         [DataMember]
-        public double StandardForce {get;set;}
+        public decimal StandardForce {get;set;}
         [Required]
         [DataMember]
-        public double TrueStress {get;set;}
+        public decimal TrueStress {get;set;}
         [Required]
         [DataMember]
-        public double PlasticElongation {get;set;}
+        public decimal PlasticElongation {get;set;}
         [Required]
         [DataMember]
-        public double XCorrectElongation {get;set;}
+        public decimal XCorrectElongation {get;set;}
 
     }
 }

@@ -7,6 +7,6 @@ namespace ExperimentToolApi.Interfaces
     {
         TensileResult Create(TensileResult newTest);
         List<TensileResult> GetListByTest(int testId);
-        List<TensileResult> GetListByAttempt(int attemptNumber);
+        List<TensileResult> GetListByAttempt(int attemptNumber, int testId);
     }
 }

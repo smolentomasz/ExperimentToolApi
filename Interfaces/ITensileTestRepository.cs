@@ -8,5 +8,6 @@ namespace ExperimentToolApi.Interfaces
          TensileTest GetById(int testId);
          List<TensileTest> GetList();
          TensileTest Create(TensileTest newTest);
+         bool isTestPresent(int testId);
     }
 }

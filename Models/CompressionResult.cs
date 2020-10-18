@@ -21,15 +21,15 @@ namespace ExperimentToolApi.Models
         public int AttemptNumber {get;set;}
         [Required]
         [DataMember]
-        public double RelativeReduction {get;set;}
+        public decimal RelativeReduction {get;set;}
         [Required]
         [DataMember]
-        public double StandardForce {get;set;}
+        public decimal StandardForce {get;set;}
         [Required]
         [DataMember]
-        public double PlasticRelativeReduction {get;set;}
+        public decimal PlasticRelativeReduction {get;set;}
         [Required]
         [DataMember]
-        public double XCorrectRelativeReduction {get;set;}
+        public decimal XCorrectRelativeReduction {get;set;}
     }
 }

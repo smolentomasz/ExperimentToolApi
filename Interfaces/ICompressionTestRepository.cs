@@ -8,5 +8,6 @@ namespace ExperimentToolApi.Interfaces
         CompressionTest GetById(int testId);
         List<CompressionTest> GetList();
         CompressionTest Create(CompressionTest newTest);
+        bool isTestPresent(int testId);
     }
 }

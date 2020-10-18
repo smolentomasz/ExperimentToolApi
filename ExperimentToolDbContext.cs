@@ -10,6 +10,7 @@ namespace ExperimentToolApi
         } 
         public DbSet<User> Users {get; set;}
         public DbSet<Material> Materials {get;set;}
+        public DbSet<TextureAnalysis> TextureAnalyses {get;set;}
         public DbSet<TensileTest> TensileTests {get; set;}
         public DbSet<TensileResult> TensileResults {get; set;}
         public DbSet<CompressionTest> CompressionTests {get; set;}

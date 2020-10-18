@@ -34,13 +34,13 @@ namespace ExperimentToolApi.Models
         public string MachineInfo {get;set;}
         [Required]
         [DataMember]
-        public double InitialForce {get;set;}
+        public decimal InitialForce {get;set;}
         [Required]
         [DataMember]
-        public double YoungModuleSpeed {get;set;}
+        public decimal YoungModuleSpeed {get;set;}
         [Required]
         [DataMember]
-        public double TestSpeed {get;set;}
+        public decimal TestSpeed {get;set;}
         [Required]
         public ICollection<CompressionResult> CompressionResults {get; set;}
     }

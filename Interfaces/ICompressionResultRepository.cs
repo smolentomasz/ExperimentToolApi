@@ -7,6 +7,6 @@ namespace ExperimentToolApi.Interfaces
     {
         CompressionResult Create(CompressionResult newTest);
         List<CompressionResult> GetListByTest(int testId);
-        List<CompressionResult> GetListByAttempt(int attemptNumber);
+        List<CompressionResult> GetListByAttempt(int attemptNumber, int testId);
     }
 }

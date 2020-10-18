@@ -31,16 +31,16 @@ namespace ExperimentToolApi.Models
         public string MachineInfo {get;set;}
         [Required]
         [DataMember]
-        public double InitialForce {get;set;}
+        public decimal InitialForce {get;set;}
         [Required]
         [DataMember]
-        public double CompressionModuleSpeed {get;set;}
+        public decimal CompressionModuleSpeed {get;set;}
         [Required]
         [DataMember]
-        public double YeldPointSpeed {get;set;}
+        public decimal YeldPointSpeed {get;set;}
         [Required]
         [DataMember]
-        public double TestSpeed {get;set;}
+        public decimal TestSpeed {get;set;}
         [Required]
         public ICollection<TensileResult> TensileResults {get; set;}
     }
