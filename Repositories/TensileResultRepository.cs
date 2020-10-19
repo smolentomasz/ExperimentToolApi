@@ -21,13 +21,13 @@ namespace ExperimentToolApi.Repositories
 
         public List<TensileResult> GetListByAttempt(int attemptNumber, int testId)
         {
-            return _context.TensileResults.Include("TensileTest").Where(test => test.TestId.Equals(testId)).Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
+            return _context.TensileResults.Include("TensileTest").Where(test => test.TensileTestId.Equals(testId)).Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
 
         }
 
         public List<TensileResult> GetListByTest(int testId)
         {
-            return _context.TensileResults.Where(test => test.TestId.Equals(testId)).ToList();
+            return _context.TensileResults.Where(test => test.TensileTestId.Equals(testId)).ToList();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ExperimentToolApi.Repositories
             return _context.Materials.ToList();
         }
 
-        public Material GetMatrialById(int materialId)
+        public Material GetMaterialById(int materialId)
         {
             return _context.Materials.Where(material => material.Id.Equals(materialId)).Single();
         }

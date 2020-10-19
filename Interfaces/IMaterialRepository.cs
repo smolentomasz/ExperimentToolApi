@@ -7,7 +7,7 @@ namespace ExperimentToolApi.Interfaces
     {
         Material Create(Material newMaterial);
         List<Material> GetList();
-        Material GetMatrialById(int materialId);
+        Material GetMaterialById(int materialId);
         bool isMaterialPresent(int materialId);
     }
 }

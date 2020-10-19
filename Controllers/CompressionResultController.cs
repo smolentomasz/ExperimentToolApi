@@ -1,11 +1,20 @@
 using System;
 using System.Globalization;
+using ExperimentToolApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExperimentToolApi.Controllers
 {
     public class CompressionResultController : ControllerBase
     {
+        private readonly ICompressionResultRepository compressionResultRepository;
+        private readonly ICompressionTestRepository compressionTestRepository;
+        public CompressionResultController(ICompressionResultRepository compressionResultRepository, ICompressionTestRepository compressionTestRepository)
+        {
+            this.compressionResultRepository = compressionResultRepository;
+            this.compressionTestRepository = compressionTestRepository;
+
+        }
         [HttpPost("/tool/compression-results"), DisableRequestSizeLimit]
         public IActionResult AddNewResults()
         {
@@ -23,5 +32,23 @@ namespace ExperimentToolApi.Controllers
             }
             return Ok("Added succesfully!");
         }
+        [HttpGet("/tool/compression-results/{testId}")]
+        public IActionResult GetResultsByTest(int testId)
+        {
+            if (compressionTestRepository.isTestPresent(testId))
+            {
+                if(compressionResultRepository.isResultForTestPresent(testId)){
+                    return Ok(compressionResultRepository.GetListByTest(testId));
+                }
+                else{
+                    return Conflict("Results don't exist for this test.");
+                }
+            }
+            else
+            {
+                return Conflict("Compression test with this id doesn't exist in database!");
+            }
+        }
+        
     }
 }

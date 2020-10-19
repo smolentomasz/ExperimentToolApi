@@ -12,7 +12,7 @@ namespace ExperimentToolApi.Models
         public int Id {get;set;}
         [Required]
         [DataMember]
-        public int TestId {get;set;}
+        public int CompressionTestId {get;set;}
         [Required]
         [DataMember]
         public CompressionTest CompressionTest {get;set;}

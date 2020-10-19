@@ -21,12 +21,22 @@ namespace ExperimentToolApi.Repositories
 
         public List<CompressionResult> GetListByAttempt(int attemptNumber, int testId)
         {
-           return _context.CompressionResults.Include("CompressionTest").Where(test => test.TestId.Equals(testId)).Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
+           return _context.CompressionResults.Include("CompressionTest").Where(test => test.CompressionTestId.Equals(testId)).Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
         }
 
         public List<CompressionResult> GetListByTest(int testId)
         {
-            return _context.CompressionResults.Where(test => test.TestId.Equals(testId)).ToList();
+            return _context.CompressionResults.Where(test => test.CompressionTestId.Equals(testId)).ToList();
+        }
+
+        public bool isResultForTestPresent(int testId)
+        {
+            if(_context.CompressionResults.ToList().Any(result => result.CompressionTestId.Equals(testId))){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
 }
