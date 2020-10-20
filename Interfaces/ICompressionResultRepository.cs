@@ -9,5 +9,6 @@ namespace ExperimentToolApi.Interfaces
         List<CompressionResult> GetListByTest(int testId);
         List<CompressionResult> GetListByAttempt(int attemptNumber, int testId);
         bool isResultForTestPresent(int testId);
+        bool isAttemptForTestPresent(int attemptNumber, int testId);
     }
 }

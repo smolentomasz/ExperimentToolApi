@@ -49,6 +49,23 @@ namespace ExperimentToolApi.Controllers
                 return Conflict("Compression test with this id doesn't exist in database!");
             }
         }
+        [HttpGet("/tool/compression-results/{testId}/{attemptNumber}")]
+        public IActionResult GetAttemptResultsByTest(int testId, int attemptNumber)
+        {
+            if (compressionTestRepository.isTestPresent(testId))
+            {
+                if(compressionResultRepository.isAttemptForTestPresent(attemptNumber, testId)){
+                    return Ok(compressionResultRepository.GetListByAttempt(attemptNumber, testId));
+                }
+                else{
+                    return Conflict("Attempt don't exist for this test.");
+                }
+            }
+            else
+            {
+                return Conflict("Compression test with this id doesn't exist in database!");
+            }
+        }
         
     }
 }

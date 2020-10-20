@@ -38,5 +38,19 @@ namespace ExperimentToolApi.Repositories
                 return false;
             }
         }
+        public bool isAttemptForTestPresent(int attemptNumber, int testId)
+        {
+            if(isResultForTestPresent(testId)){
+                if(_context.CompressionResults.Where(test => test.CompressionTestId.Equals(testId)).ToList().Any(result => result.AttemptNumber.Equals(attemptNumber))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
     }
 }
