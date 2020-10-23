@@ -1,7 +1,10 @@
+using System.IO;
 using System;
 using System.Globalization;
 using ExperimentToolApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ExperimentToolApi.Models;
+using Newtonsoft.Json.Linq;
 
 namespace ExperimentToolApi.Controllers
 {
@@ -18,7 +21,24 @@ namespace ExperimentToolApi.Controllers
         [HttpPost("/tool/compression-results"), DisableRequestSizeLimit]
         public IActionResult AddNewResults()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"Secure\SCISKANIE_WC_Walcowka_AL_30-03-2018_Xcf0521.TXT");
+            var file = Request.Form.Files[0];
+            var detailsDecode = JObject.Parse(Request.Form["resultDetails"]);
+
+            var folderName = Path.Combine("Resources", "Results", "Compression");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var fullPath = Path.Combine(pathToSave, file.FileName);
+
+            if (file.Length > 0)
+            {
+                var dbPath = Path.Combine(folderName, file.FileName);
+
+                using (var stream = System.IO.File.Create(fullPath))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+
+            string[] lines = System.IO.File.ReadAllLines(fullPath);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -27,7 +47,16 @@ namespace ExperimentToolApi.Controllers
                     lines[i] = lines[i].Replace("\t", " ");
                     string[] values = lines[i].Split(" ");
                     decimal newNumber = Decimal.Parse(values[0], NumberStyles.Float);
-                    Console.WriteLine(newNumber);
+                    var resultLine = new CreateCompResultRequest{
+                        CompressionTestId = Int32.Parse(detailsDecode["testId"].ToString()),
+                        AttemptNumber = Int32.Parse(detailsDecode["attemptNumber"].ToString()),
+                        RelativeReduction = Decimal.Parse(values[0], NumberStyles.Float),
+                        StandardForce = Decimal.Parse(values[1], NumberStyles.Float),
+                        PlasticRelativeReduction = Decimal.Parse(values[2], NumberStyles.Float),
+                        XCorrectRelativeReduction = Decimal.Parse(values[3], NumberStyles.Float)
+                    };
+                    //compressionResultRepository.Create(resultLine.returnResult());
+                    Console.WriteLine("Dodano");
                 }
             }
             return Ok("Added succesfully!");
@@ -37,10 +66,12 @@ namespace ExperimentToolApi.Controllers
         {
             if (compressionTestRepository.isTestPresent(testId))
             {
-                if(compressionResultRepository.isResultForTestPresent(testId)){
+                if (compressionResultRepository.isResultForTestPresent(testId))
+                {
                     return Ok(compressionResultRepository.GetListByTest(testId));
                 }
-                else{
+                else
+                {
                     return Conflict("Results don't exist for this test.");
                 }
             }
@@ -54,10 +85,12 @@ namespace ExperimentToolApi.Controllers
         {
             if (compressionTestRepository.isTestPresent(testId))
             {
-                if(compressionResultRepository.isAttemptForTestPresent(attemptNumber, testId)){
+                if (compressionResultRepository.isAttemptForTestPresent(attemptNumber, testId))
+                {
                     return Ok(compressionResultRepository.GetListByAttempt(attemptNumber, testId));
                 }
-                else{
+                else
+                {
                     return Conflict("Attempt don't exist for this test.");
                 }
             }
@@ -66,6 +99,6 @@ namespace ExperimentToolApi.Controllers
                 return Conflict("Compression test with this id doesn't exist in database!");
             }
         }
-        
+
     }
 }

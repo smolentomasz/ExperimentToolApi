@@ -378,4 +378,8 @@ obj/
 .history
 *.txt
 *.TXT
+Resources/AdditionalFiles/**
+Resources/Materials/**
+Resources/Results/**
+Resources/Textures/**
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,csharp,visualstudiocode

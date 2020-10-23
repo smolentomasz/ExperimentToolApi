@@ -1,4 +1,6 @@
+using System.IO;
 using ExperimentToolApi.Interfaces;
+using ExperimentToolApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -31,13 +33,36 @@ namespace ExperimentToolApi.Controllers
         [HttpPost("/tool/materials"), DisableRequestSizeLimit]
         public IActionResult AddNewTest()
         {
+            var file = Request.Form.Files[0];
             var detailsDecode = JObject.Parse(Request.Form["materialDetails"]);
 
-            string materialName = detailsDecode["name"].ToString();
-            string materialDescription = detailsDecode["description"].ToString();
-            string materialChemicalComposition = detailsDecode["chemicalComposition"].ToString();
+            var folderName = Path.Combine("Resources", "Materials");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var fullPath = Path.Combine(pathToSave, file.FileName);
 
-            return Ok();
+            if (file.Length > 0)
+            {
+                var dbPath = Path.Combine(folderName, file.FileName);
+
+                using (var stream = System.IO.File.Create(fullPath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                string materialName = detailsDecode["name"].ToString();
+                string materialInformations = detailsDecode["informations"].ToString();
+                string materialChemicalComposition = detailsDecode["chemicalComposition"].ToString();
+
+                var material = new CreateMaterialRequest{
+                    Name = materialName,
+                    MaterialPhoto = dbPath,
+                    AdditionalInformations = materialInformations,
+                    ChemicalComposition = materialChemicalComposition
+                };
+                materialRepository.Create(material.returnMaterial());
+            }
+
+            return Ok("Added succesfully!");
         }
     }
 }

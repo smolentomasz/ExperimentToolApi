@@ -30,13 +30,20 @@ namespace ExperimentToolApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c => c.SwaggerDoc("1.0", new OpenApiInfo{ Title = "Experiment Tool API", Version = "1.0" }));
+            services.AddSwaggerGen(c => c.SwaggerDoc("1.0", new OpenApiInfo { Title = "Experiment Tool API", Version = "1.0" }));
             services.AddDbContext<ExperimentToolDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("ExperimentToolConnection")));
             services.AddTransient<ICompressionTestRepository, CompressionTestRepository>();
             services.AddTransient<ICompressionResultRepository, CompressionResultRepository>();
             services.AddTransient<ITensileTestRepository, TensileTestRepository>();
             services.AddTransient<ITensileResultRepository, TensileResultRepository>();
             services.AddTransient<IMaterialRepository, MaterialRepository>();
+
+            services.AddCors(o => o.AddPolicy("ExperimentToolPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
 
         }
 
@@ -47,11 +54,14 @@ namespace ExperimentToolApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseCors("ExperimentToolPolicy");
+
             app.UseSwagger();
 
-            app.UseSwaggerUI(c =>{
-                c.SwaggerEndpoint("/swagger/1.0/swagger.json","Experiment Tool API");
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/1.0/swagger.json", "Experiment Tool API");
             });
 
             app.UseHttpsRedirection();

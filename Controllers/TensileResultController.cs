@@ -1,7 +1,10 @@
 using System;
 using System.Globalization;
+using System.IO;
 using ExperimentToolApi.Interfaces;
+using ExperimentToolApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace ExperimentToolApi.Controllers
 {
@@ -16,7 +19,24 @@ namespace ExperimentToolApi.Controllers
         [HttpPost("/tool/tensile-results"), DisableRequestSizeLimit]
         public IActionResult AddNewResults()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"Secure\Rozc_PRETY_Stal_EXT_CO_27-03-20181.TXT");
+            var file = Request.Form.Files[0];
+            var detailsDecode = JObject.Parse(Request.Form["resultDetails"]);
+
+            var folderName = Path.Combine("Resources", "Results", "Tensile");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var fullPath = Path.Combine(pathToSave, file.FileName);
+
+            if (file.Length > 0)
+            {
+                var dbPath = Path.Combine(folderName, file.FileName);
+
+                using (var stream = System.IO.File.Create(fullPath))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+
+            string[] lines = System.IO.File.ReadAllLines(fullPath);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -25,7 +45,17 @@ namespace ExperimentToolApi.Controllers
                     lines[i] = lines[i].Replace("\t", " ");
                     string[] values = lines[i].Split(" ");
                     decimal newNumber = Decimal.Parse(values[0], NumberStyles.Float);
-                    Console.WriteLine(newNumber);
+                    var resultLine = new CreateTensResultRequest{
+                        TensileTestId = Int32.Parse(detailsDecode["testId"].ToString()),
+                        AttemptNumber = Int32.Parse(detailsDecode["attemptNumber"].ToString()),
+                        Elongation = Decimal.Parse(values[0], NumberStyles.Float),
+                        StandardForce = Decimal.Parse(values[1], NumberStyles.Float),
+                        TrueStress = Decimal.Parse(values[2], NumberStyles.Float),
+                        PlasticElongation = Decimal.Parse(values[3], NumberStyles.Float),
+                        XCorrectElongation = Decimal.Parse(values[4], NumberStyles.Float)
+                    };
+                    //tensileResultRepository.Create(resultLine.returnResult());
+                    Console.WriteLine("Dodano");
                 }
             }
             return Ok("Added succesfully!");
