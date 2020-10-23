@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ExperimentToolApi.Models;
 
 namespace ExperimentToolApi.Interfaces
@@ -6,5 +7,6 @@ namespace ExperimentToolApi.Interfaces
     {
         TextureAnalysis Create(TextureAnalysis newTextureAnalysis);
         TextureAnalysis GetAnalysisByMaterialId(int materialId);
+        List<TextureAnalysis> GetList();
     }
 }

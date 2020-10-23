@@ -55,8 +55,7 @@ namespace ExperimentToolApi.Controllers
                         PlasticRelativeReduction = Decimal.Parse(values[2], NumberStyles.Float),
                         XCorrectRelativeReduction = Decimal.Parse(values[3], NumberStyles.Float)
                     };
-                    //compressionResultRepository.Create(resultLine.returnResult());
-                    Console.WriteLine("Dodano");
+                    compressionResultRepository.Create(resultLine.returnResult());
                 }
             }
             return Ok("Added succesfully!");

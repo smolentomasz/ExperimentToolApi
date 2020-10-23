@@ -54,8 +54,7 @@ namespace ExperimentToolApi.Controllers
                         PlasticElongation = Decimal.Parse(values[3], NumberStyles.Float),
                         XCorrectElongation = Decimal.Parse(values[4], NumberStyles.Float)
                     };
-                    //tensileResultRepository.Create(resultLine.returnResult());
-                    Console.WriteLine("Dodano");
+                    tensileResultRepository.Create(resultLine.returnResult());
                 }
             }
             return Ok("Added succesfully!");

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
@@ -21,6 +22,11 @@ namespace ExperimentToolApi.Repositories
         public TextureAnalysis GetAnalysisByMaterialId(int materialId)
         {
             return _context.TextureAnalyses.Include("Material").Where(analyse => analyse.MaterialId.Equals(materialId)).Single();
+        }
+
+        public List<TextureAnalysis> GetList()
+        {
+            return _context.TextureAnalyses.ToList();
         }
     }
 }

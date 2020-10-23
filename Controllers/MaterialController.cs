@@ -31,7 +31,7 @@ namespace ExperimentToolApi.Controllers
             }
         }
         [HttpPost("/tool/materials"), DisableRequestSizeLimit]
-        public IActionResult AddNewTest()
+        public IActionResult AddNewMaterial()
         {
             var file = Request.Form.Files[0];
             var detailsDecode = JObject.Parse(Request.Form["materialDetails"]);
