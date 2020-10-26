@@ -57,6 +57,7 @@ namespace ExperimentToolApi.Controllers
                     tensileResultRepository.Create(resultLine.returnResult());
                 }
             }
+            System.IO.File.Delete(fullPath);
             return Ok("Added succesfully!");
         }
         [HttpGet("/tool/tensile-results/{testId}")]

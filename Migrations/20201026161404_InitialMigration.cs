@@ -30,7 +30,8 @@ namespace ExperimentToolApi.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false)
+                    Password = table.Column<string>(nullable: false),
+                    RefreshToken = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

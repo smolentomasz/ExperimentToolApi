@@ -24,7 +24,7 @@ namespace ExperimentToolApi.Controllers
             var file = Request.Form.Files[0];
             var detailsDecode = JObject.Parse(Request.Form["resultDetails"]);
 
-            var folderName = Path.Combine("Resources", "Results", "Compression");
+            var folderName = Path.Combine("Resources", "Results");
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             var fullPath = Path.Combine(pathToSave, file.FileName);
 
@@ -58,6 +58,7 @@ namespace ExperimentToolApi.Controllers
                     compressionResultRepository.Create(resultLine.returnResult());
                 }
             }
+            System.IO.File.Delete(fullPath);
             return Ok("Added succesfully!");
         }
         [HttpGet("/tool/compression-results/{testId}")]

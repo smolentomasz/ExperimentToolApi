@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExperimentToolApi.Migrations
 {
     [DbContext(typeof(ExperimentToolDbContext))]
-    [Migration("20201018140814_InitialMigration")]
+    [Migration("20201026161404_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -232,6 +232,9 @@ namespace ExperimentToolApi.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RefreshToken")
                         .HasColumnType("text");
 
                     b.Property<string>("Username")

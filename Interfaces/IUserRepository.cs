@@ -1,11 +1,14 @@
+using System.Security.Claims;
 using ExperimentToolApi.Models;
 
 namespace ExperimentToolApi.Interfaces
 {
     public interface IUserRepository
     {
-        bool FindByEmail(string email);
-        //UserToken GetUserTokenByEmail(string username, string password);
-        User GetUserByEmail(string email);
+        bool FindByUsername(string username);
+        User GetUserByUsername(string username);
+        LoginResponse GetUserToken(User user);
+        string getRefreshToken(string token);
+        LoginResponse GetRefreshedUserToken(string token);
     }
 }

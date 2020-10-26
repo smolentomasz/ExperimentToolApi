@@ -1,18 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Repositories;
+using ExperimentToolApi.Secure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace ExperimentToolApi
@@ -37,6 +36,44 @@ namespace ExperimentToolApi
             services.AddTransient<ITensileTestRepository, TensileTestRepository>();
             services.AddTransient<ITensileResultRepository, TensileResultRepository>();
             services.AddTransient<IMaterialRepository, MaterialRepository>();
+            services.AddTransient<ITextureAnalysisRepository, TextureAnalysisRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            var jwtSection = Configuration.GetSection("JwtSettings");
+            services.Configure<JwtSettings>(jwtSection);
+
+            var appSettings = jwtSection.Get<JwtSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Key);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+                x.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+            });
 
             services.AddCors(o => o.AddPolicy("ExperimentToolPolicy", builder =>
             {
@@ -55,6 +92,8 @@ namespace ExperimentToolApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+            
             app.UseCors("ExperimentToolPolicy");
 
             app.UseSwagger();
