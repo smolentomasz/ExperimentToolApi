@@ -15,5 +15,6 @@ namespace ExperimentToolApi
         public DbSet<TensileResult> TensileResults {get; set;}
         public DbSet<CompressionTest> CompressionTests {get; set;}
         public DbSet<CompressionResult> CompressionResults {get; set;}
+        public DbSet<AdditionalFile> AdditionalFiles {get;set;}
     }
 }
