@@ -5,11 +5,11 @@ namespace ExperimentToolApi.Models
         public int materialId {get;set;}
         public string title {get;set;}
         public string description {get;set;}
-        public string company {get;set;}
-        public string testStandard {get;set;}
+        public string testAuthor {get;set;}
         public string machineInfo {get;set;}
         public decimal initalForce {get;set;}
-        public decimal youngModuleSpeed {get;set;}
+        public decimal compressionModuleSpeed {get;set;}
+       public decimal yeldPointSpeed {get;set;}
         public decimal testSpeed {get;set;}
 
         public CreateCompTestRequest(){
@@ -20,11 +20,11 @@ namespace ExperimentToolApi.Models
                 MaterialId = this.materialId,
                 Title = this.title,
                 Description = this.description,
-                Company = this.company,
-                TestStandard = this.testStandard,
+                TestAuthor = this.testAuthor,
                 MachineInfo = this.machineInfo,
                 InitialForce = this.initalForce,
-                YoungModuleSpeed = this.youngModuleSpeed,
+                CompressionModuleSpeed = this.compressionModuleSpeed,
+                YeldPointSpeed = this.yeldPointSpeed,
                 TestSpeed = this.testSpeed
             };
             return compressionTest;

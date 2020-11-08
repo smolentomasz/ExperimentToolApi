@@ -1,6 +1,7 @@
 using System.IO;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -27,9 +28,10 @@ namespace ExperimentToolApi.Controllers
             }
             else
             {
-                return Conflict("Compression test with this id doesn't exist in database!");
+                return Conflict(new ApiResponse("Compression test with this id doesn't exist in database!"));
             }
         }
+        [Authorize]
         [HttpPost("/tool/materials"), DisableRequestSizeLimit]
         public IActionResult AddNewMaterial()
         {
@@ -61,8 +63,7 @@ namespace ExperimentToolApi.Controllers
                 };
                 materialRepository.Create(material.returnMaterial());
             }
-
-            return Ok("Added succesfully!");
+            return Ok(new ApiResponse("Added succesfully!"));
         }
     }
 }

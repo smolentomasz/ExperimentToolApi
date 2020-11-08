@@ -23,7 +23,7 @@ namespace ExperimentToolApi.Controllers
         {
             if (reference.Equals(""))
             {
-                return BadRequest("Missing or invalid data");
+                return BadRequest(new ApiResponse("Missing or invalid data"));
             }
             else
             {
@@ -33,7 +33,7 @@ namespace ExperimentToolApi.Controllers
                 }
                 else
                 {
-                    return Conflict("Additional files for this case don't exist in database!");
+                    return Conflict(new ApiResponse("Additional files for this case don't exist in database!"));
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace ExperimentToolApi.Controllers
                 additionalFileRepository.Create(additionalFile.returnFile());
             }
 
-            return Ok("Added succesfully!");
+            return Ok(new ApiResponse("Added succesfully!"));
         }
     }
 }

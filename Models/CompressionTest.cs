@@ -25,10 +25,7 @@ namespace ExperimentToolApi.Models
         public string Description {get;set;}
         [Required]
         [DataMember]
-        public string Company {get;set;}
-        [Required]
-        [DataMember]
-        public string TestStandard {get;set;}
+        public string TestAuthor {get;set;}
         [Required]
         [DataMember]
         public string MachineInfo {get;set;}
@@ -37,7 +34,10 @@ namespace ExperimentToolApi.Models
         public decimal InitialForce {get;set;}
         [Required]
         [DataMember]
-        public decimal YoungModuleSpeed {get;set;}
+        public decimal CompressionModuleSpeed {get;set;}
+        [Required]
+        [DataMember]
+        public decimal YeldPointSpeed {get;set;}
         [Required]
         [DataMember]
         public decimal TestSpeed {get;set;}

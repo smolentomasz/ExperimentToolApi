@@ -58,7 +58,7 @@ namespace ExperimentToolApi.Controllers
                 }
             }
             System.IO.File.Delete(fullPath);
-            return Ok("Added succesfully!");
+            return Ok(new ApiResponse("Added succesfully!"));
         }
         [HttpGet("/tool/tensile-results/{testId}")]
         public IActionResult GetResultsByTest(int testId)
@@ -69,12 +69,12 @@ namespace ExperimentToolApi.Controllers
                     return Ok(tensileResultRepository.GetListByTest(testId));
                 }
                 else{
-                    return Conflict("Results don't exist for this test.");
+                    return Conflict(new ApiResponse("Results don't exist for this test."));
                 }
             }
             else
             {
-                return Conflict("Tensile test with this id doesn't exist in database!");
+                return Conflict(new ApiResponse("Tensile test with this id doesn't exist in database!"));
             }
         }
         [HttpGet("/tool/tensile-results/{testId}/{attemptNumber}")]
@@ -86,12 +86,12 @@ namespace ExperimentToolApi.Controllers
                     return Ok(tensileResultRepository.GetListByAttempt(attemptNumber, testId));
                 }
                 else{
-                    return Conflict("Attempt don't exist for this test.");
+                    return Conflict(new ApiResponse("Attempt don't exist for this test."));
                 }
             }
             else
             {
-                return Conflict("Compression test with this id doesn't exist in database!");
+                return Conflict(new ApiResponse("Compression test with this id doesn't exist in database!"));
             }
         }  
     }

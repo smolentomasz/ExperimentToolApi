@@ -92,26 +92,26 @@ namespace ExperimentToolApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseAuthentication();
-            
             app.UseCors("ExperimentToolPolicy");
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/1.0/swagger.json", "Experiment Tool API");
-            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/1.0/swagger.json", "Experiment Tool API");
             });
         }
     }

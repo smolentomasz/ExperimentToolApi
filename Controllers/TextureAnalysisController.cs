@@ -30,7 +30,7 @@ namespace ExperimentToolApi.Controllers
             }
             else
             {
-                return Conflict("Material with this id doesn't exist in database!");
+                return Conflict(new ApiResponse("Material with this id doesn't exist in database!"));
             }
         }
         [HttpPost("/tool/analyses"), DisableRequestSizeLimit]
@@ -63,7 +63,7 @@ namespace ExperimentToolApi.Controllers
                 textureAnalysisRepository.Create(textureAnalysis.returnAnalysis());
             }
 
-            return Ok("Added succesfully!");
+            return Ok(new ApiResponse("Added succesfully!"));
         }
     }
 }

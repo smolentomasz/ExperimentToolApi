@@ -8,6 +8,21 @@ namespace ExperimentToolApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AdditionalFiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DbPath = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Reference = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdditionalFiles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Materials",
                 columns: table => new
                 {
@@ -47,11 +62,11 @@ namespace ExperimentToolApi.Migrations
                     MaterialId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Company = table.Column<string>(nullable: false),
-                    TestStandard = table.Column<string>(nullable: false),
+                    TestAuthor = table.Column<string>(nullable: false),
                     MachineInfo = table.Column<string>(nullable: false),
                     InitialForce = table.Column<decimal>(nullable: false),
-                    YoungModuleSpeed = table.Column<decimal>(nullable: false),
+                    CompressionModuleSpeed = table.Column<decimal>(nullable: false),
+                    YeldPointSpeed = table.Column<decimal>(nullable: false),
                     TestSpeed = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -74,11 +89,11 @@ namespace ExperimentToolApi.Migrations
                     MaterialId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    TestAuthor = table.Column<string>(nullable: false),
+                    Company = table.Column<string>(nullable: false),
+                    TestStandard = table.Column<string>(nullable: false),
                     MachineInfo = table.Column<string>(nullable: false),
                     InitialForce = table.Column<decimal>(nullable: false),
-                    CompressionModuleSpeed = table.Column<decimal>(nullable: false),
-                    YeldPointSpeed = table.Column<decimal>(nullable: false),
+                    YoungModuleSpeed = table.Column<decimal>(nullable: false),
                     TestSpeed = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -191,6 +206,9 @@ namespace ExperimentToolApi.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AdditionalFiles");
+
             migrationBuilder.DropTable(
                 name: "CompressionResults");
 

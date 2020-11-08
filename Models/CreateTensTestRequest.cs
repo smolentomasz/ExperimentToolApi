@@ -5,11 +5,11 @@ namespace ExperimentToolApi.Models
         public int materialId {get;set;}
         public string title {get;set;}
         public string description {get;set;}
-        public string testAuthor {get;set;}
+        public string company {get;set;}
         public string machineInfo {get;set;}
+        public string testStandard {get;set;}
         public decimal initalForce {get;set;}
-        public decimal compressionModuleSpeed {get;set;}
-        public decimal yeldPointSpeed {get;set;}
+        public decimal youngModuleSpeed {get;set;}
         public decimal testSpeed {get;set;}
 
         public CreateTensTestRequest(){
@@ -20,11 +20,11 @@ namespace ExperimentToolApi.Models
                 MaterialId = this.materialId,
                 Title = this.title,
                 Description = this.description,
-                TestAuthor = this.testAuthor,
+                Company = this.company,
                 MachineInfo = this.machineInfo,
+                TestStandard = this.testStandard,
                 InitialForce = this.initalForce,
-                CompressionModuleSpeed = this.compressionModuleSpeed,
-                YeldPointSpeed = this.yeldPointSpeed,
+                YoungModuleSpeed = this.youngModuleSpeed,
                 TestSpeed = this.testSpeed
             };
             return tensileTest;

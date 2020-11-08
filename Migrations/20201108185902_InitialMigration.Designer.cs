@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExperimentToolApi.Migrations
 {
     [DbContext(typeof(ExperimentToolDbContext))]
-    [Migration("20201026161404_InitialMigration")]
+    [Migration("20201108185902_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,29 @@ namespace ExperimentToolApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("ExperimentToolApi.Models.AdditionalFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("DbPath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdditionalFiles");
+                });
 
             modelBuilder.Entity("ExperimentToolApi.Models.CompressionResult", b =>
                 {
@@ -55,9 +78,8 @@ namespace ExperimentToolApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<decimal>("CompressionModuleSpeed")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -73,18 +95,18 @@ namespace ExperimentToolApi.Migrations
                     b.Property<int>("MaterialId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TestSpeed")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<string>("TestStandard")
+                    b.Property<string>("TestAuthor")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<decimal>("TestSpeed")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("YoungModuleSpeed")
+                    b.Property<decimal>("YeldPointSpeed")
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
@@ -161,8 +183,9 @@ namespace ExperimentToolApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<decimal>("CompressionModuleSpeed")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -178,18 +201,18 @@ namespace ExperimentToolApi.Migrations
                     b.Property<int>("MaterialId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TestAuthor")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<decimal>("TestSpeed")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("TestStandard")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("YeldPointSpeed")
+                    b.Property<decimal>("YoungModuleSpeed")
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");

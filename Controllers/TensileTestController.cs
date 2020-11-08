@@ -23,12 +23,12 @@ namespace ExperimentToolApi.Controllers
         public IActionResult AddNewTest([FromBody] CreateTensTestRequest newTest)
         {
             if (newTest.materialId.Equals("") || newTest.title.Equals("") ||
-                newTest.description.Equals("") || newTest.testAuthor.Equals("") ||
-                newTest.machineInfo.Equals("") || newTest.compressionModuleSpeed.Equals("") ||
-                newTest.initalForce.Equals("") || newTest.yeldPointSpeed.Equals("") ||
+                newTest.description.Equals("") || newTest.company.Equals("") ||
+                newTest.machineInfo.Equals("") || newTest.youngModuleSpeed.Equals("") ||
+                newTest.initalForce.Equals("") || newTest.testStandard.Equals("") ||
                 newTest.testSpeed.Equals(""))
             {
-                return BadRequest("Missing or invalid data");
+                return BadRequest(new ApiResponse("Missing or invalid data"));
             }
             else
             {
@@ -38,7 +38,7 @@ namespace ExperimentToolApi.Controllers
                 }
                 else
                 {
-                    return NotFound("Material with this id doesn't exist.");
+                    return NotFound(new ApiResponse("Material with this id doesn't exist."));
                 }
 
             }
@@ -49,7 +49,7 @@ namespace ExperimentToolApi.Controllers
             if (tensileTestRepository.isTestPresent(testId))
                 return Ok(tensileTestRepository.GetById(testId));
             else
-                return Conflict("Compression test with this id doesn't exist in database!");
+                return Conflict(new ApiResponse("Compression test with this id doesn't exist in database!"));
         }
     }
 }

@@ -18,7 +18,6 @@ namespace ExperimentToolApi.Controllers
         {
             this.userRepository = userRepository;
         }
-        [AllowAnonymous]
         [HttpPost("/tool/users/login")]
         public IActionResult Login([FromHeader(Name = "Username")] string username, [FromHeader(Name = "Password")] string password)
         {
@@ -33,23 +32,22 @@ namespace ExperimentToolApi.Controllers
                 }
                 else
                 {
-                    return Unauthorized("Password is not matching!");
+                    return Unauthorized(new ApiResponse("Password is not matching!"));
                 }
 
             }
             else
             {
-                return BadRequest("User with this username doesn't exist in database!");
+                return BadRequest(new ApiResponse("User with this username doesn't exist in database!"));
             }
         }
-        [AllowAnonymous]
         [HttpPost("/tool/users/refresh")]
         public IActionResult Refresh([FromHeader(Name = "Token")] string token, [FromHeader(Name = "RefreshToken")] string refreshToken)
         {
             string savedRefreshToken = userRepository.getRefreshToken(token);
             if (savedRefreshToken != refreshToken)
             {
-                return Unauthorized("Invalid refresh token!");
+                return Unauthorized(new ApiResponse("Invalid refresh token!"));
             }
             else
             {
