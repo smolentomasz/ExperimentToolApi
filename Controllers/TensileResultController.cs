@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -16,6 +17,7 @@ namespace ExperimentToolApi.Controllers
             this.tensileResultRepository = tensileResultRepository;
             this.tensileTestRepository = tensileTestRepository;
         }
+        [Authorize]
         [HttpPost("/tool/tensile-results"), DisableRequestSizeLimit]
         public IActionResult AddNewResults()
         {
@@ -58,7 +60,7 @@ namespace ExperimentToolApi.Controllers
                 }
             }
             System.IO.File.Delete(fullPath);
-            return Ok(new ApiResponse("Added succesfully!"));
+            return Ok(new ApiResponse("Added tensile test results succesfully!"));
         }
         [HttpGet("/tool/tensile-results/{testId}")]
         public IActionResult GetResultsByTest(int testId)

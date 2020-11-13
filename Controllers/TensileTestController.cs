@@ -1,5 +1,6 @@
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExperimentToolApi.Controllers
@@ -19,6 +20,7 @@ namespace ExperimentToolApi.Controllers
         {
             return Ok(tensileTestRepository.GetList());
         }
+        [Authorize]
         [HttpPost("/tool/tensile-tests")]
         public IActionResult AddNewTest([FromBody] CreateTensTestRequest newTest)
         {
@@ -34,7 +36,9 @@ namespace ExperimentToolApi.Controllers
             {
                 if (materialRepository.isMaterialPresent(newTest.materialId))
                 {
-                    return Ok(tensileTestRepository.Create(newTest.returnTest()));
+                    tensileTestRepository.Create(newTest.returnTest());
+                    
+                    return Ok(new ApiResponse("New tensile test added succesfully!"));
                 }
                 else
                 {

@@ -5,6 +5,7 @@ using ExperimentToolApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using ExperimentToolApi.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExperimentToolApi.Controllers
 {
@@ -18,6 +19,7 @@ namespace ExperimentToolApi.Controllers
             this.compressionTestRepository = compressionTestRepository;
 
         }
+        [Authorize]
         [HttpPost("/tool/compression-results"), DisableRequestSizeLimit]
         public IActionResult AddNewResults()
         {
@@ -59,7 +61,7 @@ namespace ExperimentToolApi.Controllers
                 }
             }
             System.IO.File.Delete(fullPath);
-            return Ok(new ApiResponse("Added succesfully!"));
+            return Ok(new ApiResponse("Added compression test result succesfully!"));
         }
         [HttpGet("/tool/compression-results/{testId}")]
         public IActionResult GetResultsByTest(int testId)

@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExperimentToolApi.Controllers
@@ -21,6 +22,7 @@ namespace ExperimentToolApi.Controllers
         {
             return Ok(compressionTestRepository.GetList());
         }
+        [Authorize]
         [HttpPost("/tool/compression-tests")]
         public IActionResult AddNewTest([FromBody] CreateCompTestRequest newTest)
         {
@@ -36,7 +38,9 @@ namespace ExperimentToolApi.Controllers
             {
                 if (materialRepository.isMaterialPresent(newTest.materialId))
                 {
-                    return Ok(compressionTestRepository.Create(newTest.returnTest()));
+                    compressionTestRepository.Create(newTest.returnTest());
+                   
+                    return Ok( new ApiResponse("New compression test added succesfully!"));
                 }
                 else
                 {
