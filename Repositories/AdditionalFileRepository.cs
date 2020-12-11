@@ -20,7 +20,17 @@ namespace ExperimentToolApi.Repositories
 
         public List<AdditionalFile> GetByReference(string reference)
         {
-            return _context.AdditionalFiles.Where(file => file.Reference.Equals(reference)).ToList();
+            return _context.AdditionalFiles.Where(file => file.ReferenceType.Equals(reference)).ToList();
+        }
+
+        public AdditionalFile GetFileById(int id)
+        {
+            if(isPresentById(id)){
+                return _context.AdditionalFiles.Where(file => file.Id.Equals(id)).Single();
+            }
+            else{
+                return null;
+            }
         }
 
         public List<AdditionalFile> GetList()
@@ -30,7 +40,17 @@ namespace ExperimentToolApi.Repositories
 
         public bool isPresent(string reference)
         {
-            if(_context.AdditionalFiles.ToList().Any(file => file.Reference.Equals(reference))){
+            if(_context.AdditionalFiles.ToList().Any(file => file.ReferenceType.Equals(reference))){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public bool isPresentById(int id)
+        {
+           if(_context.AdditionalFiles.ToList().Any(file => file.Id.Equals(id))){
                 return true;
             }
             else{

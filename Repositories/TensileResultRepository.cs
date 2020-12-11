@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using System.Collections.Generic;
 using System.Linq;
 using ExperimentToolApi.Interfaces;
@@ -12,26 +13,25 @@ namespace ExperimentToolApi.Repositories
         public TensileResultRepository(ExperimentToolDbContext context){
             _context = context;
         } 
-        public TensileResult Create(TensileResult newResult)
+        public void Create(List<TensileResult> resultsList)
         {
-            _context.TensileResults.Add(newResult);
+            _context.TensileResults.AddRange(resultsList);  
             _context.SaveChanges();
-            return newResult;
         }
 
         public List<TensileResult> GetListByAttempt(int attemptNumber, int testId)
         {
-            return _context.TensileResults.Include("TensileTest").Where(test => test.TensileTestId.Equals(testId)).Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
+            return _context.TensileResults.Where(test => test.TensileTestId.Equals(testId)).Include("TensileTest").Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
 
         }
 
-        public List<TensileResult> GetListByTest(int testId)
+        public List<int> GetListByTest(int testId)
         {
-            return _context.TensileResults.Where(test => test.TensileTestId.Equals(testId)).ToList();
+            return _context.TensileResults.Where(result => result.TensileTestId.Equals(testId)).Select(result => result.AttemptNumber).Distinct().ToList();
         }
          public bool isResultForTestPresent(int testId)
         {
-            if(_context.CompressionResults.ToList().Any(result => result.CompressionTestId.Equals(testId))){
+            if(_context.TensileResults.ToList().Any(result => result.TensileTestId.Equals(testId))){
                 return true;
             }
             else{
@@ -41,7 +41,7 @@ namespace ExperimentToolApi.Repositories
         public bool isAttemptForTestPresent(int attemptNumber, int testId)
         {
             if(isResultForTestPresent(testId)){
-                if(_context.CompressionResults.Where(test => test.CompressionTestId.Equals(testId)).ToList().Any(result => result.AttemptNumber.Equals(attemptNumber))){
+                if(_context.TensileResults.Where(test => test.TensileTestId.Equals(testId)).ToList().Any(result => result.AttemptNumber.Equals(attemptNumber))){
                     return true;
                 }
                 else{

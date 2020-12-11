@@ -18,6 +18,9 @@ namespace ExperimentToolApi.Models
         public string Name {get;set;}
         [Required]
         [DataMember]
-        public string Reference {get;set;}
+        public string ReferenceType {get;set;}
+        [Required]
+        [DataMember]
+        public string ReferenceTypeName {get;set;}
     }
 }

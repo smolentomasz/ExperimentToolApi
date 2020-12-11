@@ -8,6 +8,9 @@ namespace ExperimentToolApi.Models
         public decimal StandardForce {get;set;}
         public decimal PlasticRelativeReduction {get;set;}
         public decimal XCorrectRelativeReduction {get;set;}
+        public decimal D0 {get;set;}
+        public decimal H0 {get;set;}
+        public decimal S0 {get;set;}
 
         public CreateCompResultRequest(){}
 
@@ -18,7 +21,10 @@ namespace ExperimentToolApi.Models
                 RelativeReduction = this.RelativeReduction,
                 StandardForce = this.StandardForce,
                 PlasticRelativeReduction = this.PlasticRelativeReduction,
-                XCorrectRelativeReduction = this.XCorrectRelativeReduction
+                XCorrectRelativeReduction = this.XCorrectRelativeReduction,
+                D0 = this.D0,
+                H0 = this.H0,
+                S0 = this.S0
             };
             return compressionResult;
         }

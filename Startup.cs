@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using ExperimentToolApi.Interfaces;
@@ -7,9 +8,11 @@ using ExperimentToolApi.Secure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -38,6 +41,9 @@ namespace ExperimentToolApi
             services.AddTransient<IMaterialRepository, MaterialRepository>();
             services.AddTransient<ITextureAnalysisRepository, TextureAnalysisRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAdditionalFileRepository, AdditionalFileRepository>();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             var jwtSection = Configuration.GetSection("JwtSettings");
             services.Configure<JwtSettings>(jwtSection);
@@ -95,6 +101,14 @@ namespace ExperimentToolApi
             app.UseCors("ExperimentToolPolicy");
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
 
             app.UseRouting();
 

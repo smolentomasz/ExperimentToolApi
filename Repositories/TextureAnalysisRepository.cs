@@ -26,7 +26,7 @@ namespace ExperimentToolApi.Repositories
 
         public List<TextureAnalysis> GetList()
         {
-            return _context.TextureAnalyses.ToList();
+            return _context.TextureAnalyses.Include("Material").ToList();
         }
     }
 }

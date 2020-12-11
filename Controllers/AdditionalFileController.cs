@@ -1,7 +1,10 @@
+using System;
 using System.IO;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Newtonsoft.Json.Linq;
 
 namespace ExperimentToolApi.Controllers
@@ -18,7 +21,7 @@ namespace ExperimentToolApi.Controllers
         {
             return Ok(additionalFileRepository.GetList());
         }
-        [HttpGet("/tool/additional-files/{reference}")]
+        [HttpGet("/tool/additional-files/reference/{reference}")]
         public IActionResult GetByReference(string reference)
         {
             if (reference.Equals(""))
@@ -37,8 +40,35 @@ namespace ExperimentToolApi.Controllers
                 }
             }
         }
+        [Authorize]
+        [HttpGet("/tool/additional-files/id/{id}")]
+        public IActionResult GetFileById(int id)
+        {
+            if (additionalFileRepository.isPresentById(id))
+            {
+                AdditionalFile getFile = additionalFileRepository.GetFileById(id);
+
+                var filePath = getFile.DbPath;
+
+                if (!System.IO.File.Exists(filePath))
+                    return NotFound(new ApiResponse("Not exist!"));
+                else
+                {
+                    var bytes = System.IO.File.ReadAllBytes(filePath);
+                    FileContentResult newResult = File(bytes, MimeTypes.GetMimeType(getFile.Name), getFile.Name);
+                    return Ok(newResult);
+                }
+
+            }
+            else
+            {
+                return Conflict(new ApiResponse("File with this id does not exist in database!"));
+            }
+        }
+        [Authorize]
         [HttpPost("/tool/additional-files")]
-        public IActionResult AddNewFile(){
+        public IActionResult AddNewFile()
+        {
             var file = Request.Form.Files[0];
             var detailsDecode = JObject.Parse(Request.Form["aditionalDetails"]);
 
@@ -55,17 +85,30 @@ namespace ExperimentToolApi.Controllers
                     file.CopyTo(stream);
                 }
 
-                string reference = detailsDecode["reference"].ToString();
+                string referenceType = detailsDecode["referenceType"].ToString();
+                string referenceTypeName = detailsDecode["referenceTypeName"].ToString();
 
-                var additionalFile = new CreateFileRequest{
-                    Name = file.Name,
+                var additionalFile = new CreateFileRequest
+                {
+                    Name = file.FileName,
                     DbPath = dbPath,
-                    Reference = reference
+                    ReferenceType = referenceType,
+                    ReferenceTypeName = referenceTypeName
                 };
                 additionalFileRepository.Create(additionalFile.returnFile());
             }
 
             return Ok(new ApiResponse("Added succesfully!"));
+        }
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
         }
     }
 }

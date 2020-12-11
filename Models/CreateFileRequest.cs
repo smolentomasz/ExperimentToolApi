@@ -4,7 +4,8 @@ namespace ExperimentToolApi.Models
     {
         public string DbPath {get;set;}
         public string Name {get;set;}
-        public string Reference {get;set;}
+        public string ReferenceType {get;set;}
+         public string ReferenceTypeName {get;set;}
 
         public CreateFileRequest(){
 
@@ -14,7 +15,8 @@ namespace ExperimentToolApi.Models
             var file = new AdditionalFile{
                 Name = this.Name,
                 DbPath = this.DbPath,
-                Reference = this.Reference
+                ReferenceType = this.ReferenceType,
+                ReferenceTypeName = this.ReferenceTypeName
             };
             return file;
         }

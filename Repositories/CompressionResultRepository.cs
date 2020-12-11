@@ -12,21 +12,20 @@ namespace ExperimentToolApi.Repositories
         public CompressionResultRepository(ExperimentToolDbContext context){
             _context = context;
         } 
-        public CompressionResult Create(CompressionResult newResult)
+        public void Create(List<CompressionResult> resultList)
         {
-            _context.CompressionResults.Add(newResult);
+            _context.CompressionResults.AddRange(resultList);
             _context.SaveChanges();
-            return newResult;
         }
 
         public List<CompressionResult> GetListByAttempt(int attemptNumber, int testId)
         {
-           return _context.CompressionResults.Include("CompressionTest").Where(test => test.CompressionTestId.Equals(testId)).Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
+           return _context.CompressionResults.Where(test => test.CompressionTestId.Equals(testId)).Include("CompressionTest").Where(attempt => attempt.AttemptNumber.Equals(attemptNumber)).ToList();
         }
 
-        public List<CompressionResult> GetListByTest(int testId)
+        public List<int> GetListByTest(int testId)
         {
-            return _context.CompressionResults.Where(test => test.CompressionTestId.Equals(testId)).ToList();
+            return _context.CompressionResults.Where(test => test.CompressionTestId.Equals(testId)).Select(result => result.AttemptNumber).Distinct().ToList();
         }
 
         public bool isResultForTestPresent(int testId)

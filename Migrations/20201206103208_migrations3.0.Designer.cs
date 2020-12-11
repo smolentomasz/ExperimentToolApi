@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExperimentToolApi.Migrations
 {
     [DbContext(typeof(ExperimentToolDbContext))]
-    [Migration("20201108185902_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201206103208_migrations3.0")]
+    partial class migrations30
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,11 @@ namespace ExperimentToolApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Reference")
+                    b.Property<string>("ReferenceType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ReferenceTypeName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -53,17 +57,26 @@ namespace ExperimentToolApi.Migrations
                     b.Property<int>("CompressionTestId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("D0")
+                        .HasColumnType("decimal(18, 10)");
+
+                    b.Property<decimal>("H0")
+                        .HasColumnType("decimal(18, 10)");
+
                     b.Property<decimal>("PlasticRelativeReduction")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<decimal>("RelativeReduction")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
+
+                    b.Property<decimal>("S0")
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<decimal>("StandardForce")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<decimal>("XCorrectRelativeReduction")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.HasKey("Id");
 
@@ -79,14 +92,14 @@ namespace ExperimentToolApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("CompressionModuleSpeed")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("InitialForce")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<string>("MachineInfo")
                         .IsRequired()
@@ -100,14 +113,14 @@ namespace ExperimentToolApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("TestSpeed")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("YeldPointSpeed")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.HasKey("Id");
 
@@ -153,22 +166,31 @@ namespace ExperimentToolApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Elongation")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
+
+                    b.Property<decimal>("L0")
+                        .HasColumnType("decimal(18, 10)");
+
+                    b.Property<decimal>("Lc")
+                        .HasColumnType("decimal(18, 10)");
+
+                    b.Property<decimal>("Lu")
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<decimal>("PlasticElongation")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<decimal>("StandardForce")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<int>("TensileTestId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TrueStress")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<decimal>("XCorrectElongation")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.HasKey("Id");
 
@@ -192,7 +214,7 @@ namespace ExperimentToolApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("InitialForce")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<string>("MachineInfo")
                         .IsRequired()
@@ -202,7 +224,7 @@ namespace ExperimentToolApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TestSpeed")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.Property<string>("TestStandard")
                         .IsRequired()
@@ -213,7 +235,7 @@ namespace ExperimentToolApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("YoungModuleSpeed")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 10)");
 
                     b.HasKey("Id");
 

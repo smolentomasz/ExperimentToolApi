@@ -34,6 +34,15 @@ namespace ExperimentToolApi.Models
         [Required]
         [DataMember]
         public decimal XCorrectElongation {get;set;}
+        [Required]
+        [DataMember]
+        public decimal L0 {get;set;}
+        [Required]
+        [DataMember]
+        public decimal Lu {get;set;}
+        [Required]
+        [DataMember]
+        public decimal Lc {get;set;}
 
     }
 }

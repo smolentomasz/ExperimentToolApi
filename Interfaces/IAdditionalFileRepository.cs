@@ -7,7 +7,9 @@ namespace ExperimentToolApi.Interfaces
     {
         AdditionalFile Create(AdditionalFile newFile);
         List<AdditionalFile> GetList();
+        AdditionalFile GetFileById(int id);
         List<AdditionalFile> GetByReference(string reference);
+        bool isPresentById(int id);
         bool isPresent(string reference);
     }
 }

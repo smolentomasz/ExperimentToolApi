@@ -1,4 +1,6 @@
+using System.Text;
 using System;
+using System.Drawing;
 using System.IO;
 using ExperimentToolApi.Interfaces;
 using ExperimentToolApi.Models;
@@ -43,13 +45,28 @@ namespace ExperimentToolApi.Controllers
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             var fullPath = Path.Combine(pathToSave, file.FileName);
 
+            string[] fileNameParts = file.FileName.Split(".");
+        
             if (file.Length > 0)
-            {
-                var dbPath = Path.Combine(folderName, file.FileName);
-
+            {                
                 using (var stream = System.IO.File.Create(fullPath))
                 {
                     file.CopyTo(stream);
+                }
+
+                var dbPath = "";
+
+                if(Path.GetExtension(file.FileName).Equals(".tif")){
+                    StringBuilder newStringBuilder = new StringBuilder();
+                    newStringBuilder.Append(fileNameParts[0]);
+                    newStringBuilder.Append(".jpg");
+                    
+                    var changedPath = Path.Combine(pathToSave, newStringBuilder.ToString());
+                    dbPath = Path.Combine(folderName, newStringBuilder.ToString());
+                    Bitmap.FromFile(fullPath).Save(changedPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+                else{
+                    dbPath = Path.Combine(folderName, file.FileName);
                 }
 
                 string materialId = detailsDecode["materialId"].ToString();

@@ -3,7 +3,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace ExperimentToolApi.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class migrations30 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace ExperimentToolApi.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     DbPath = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Reference = table.Column<string>(nullable: false)
+                    ReferenceType = table.Column<string>(nullable: false),
+                    ReferenceTypeName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,10 +65,10 @@ namespace ExperimentToolApi.Migrations
                     Description = table.Column<string>(nullable: false),
                     TestAuthor = table.Column<string>(nullable: false),
                     MachineInfo = table.Column<string>(nullable: false),
-                    InitialForce = table.Column<decimal>(nullable: false),
-                    CompressionModuleSpeed = table.Column<decimal>(nullable: false),
-                    YeldPointSpeed = table.Column<decimal>(nullable: false),
-                    TestSpeed = table.Column<decimal>(nullable: false)
+                    InitialForce = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    CompressionModuleSpeed = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    YeldPointSpeed = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    TestSpeed = table.Column<decimal>(type: "decimal(18, 10)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,9 +93,9 @@ namespace ExperimentToolApi.Migrations
                     Company = table.Column<string>(nullable: false),
                     TestStandard = table.Column<string>(nullable: false),
                     MachineInfo = table.Column<string>(nullable: false),
-                    InitialForce = table.Column<decimal>(nullable: false),
-                    YoungModuleSpeed = table.Column<decimal>(nullable: false),
-                    TestSpeed = table.Column<decimal>(nullable: false)
+                    InitialForce = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    YoungModuleSpeed = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    TestSpeed = table.Column<decimal>(type: "decimal(18, 10)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,10 +137,13 @@ namespace ExperimentToolApi.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     CompressionTestId = table.Column<int>(nullable: false),
                     AttemptNumber = table.Column<int>(nullable: false),
-                    RelativeReduction = table.Column<decimal>(nullable: false),
-                    StandardForce = table.Column<decimal>(nullable: false),
-                    PlasticRelativeReduction = table.Column<decimal>(nullable: false),
-                    XCorrectRelativeReduction = table.Column<decimal>(nullable: false)
+                    RelativeReduction = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    StandardForce = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    PlasticRelativeReduction = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    XCorrectRelativeReduction = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    D0 = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    H0 = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    S0 = table.Column<decimal>(type: "decimal(18, 10)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,11 +164,14 @@ namespace ExperimentToolApi.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     TensileTestId = table.Column<int>(nullable: false),
                     AttemptNumber = table.Column<int>(nullable: false),
-                    Elongation = table.Column<decimal>(nullable: false),
-                    StandardForce = table.Column<decimal>(nullable: false),
-                    TrueStress = table.Column<decimal>(nullable: false),
-                    PlasticElongation = table.Column<decimal>(nullable: false),
-                    XCorrectElongation = table.Column<decimal>(nullable: false)
+                    Elongation = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    StandardForce = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    TrueStress = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    PlasticElongation = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    XCorrectElongation = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    L0 = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    Lu = table.Column<decimal>(type: "decimal(18, 10)", nullable: false),
+                    Lc = table.Column<decimal>(type: "decimal(18, 10)", nullable: false)
                 },
                 constraints: table =>
                 {

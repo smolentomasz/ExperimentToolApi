@@ -10,6 +10,9 @@ namespace ExperimentToolApi.Models
         public decimal TrueStress {get;set;}
         public decimal PlasticElongation {get;set;}
         public decimal XCorrectElongation {get;set;}
+        public decimal L0 {get;set;}
+        public decimal Lu {get;set;}
+        public decimal Lc {get;set;}
 
         public CreateTensResultRequest(){
 
@@ -23,7 +26,10 @@ namespace ExperimentToolApi.Models
                 StandardForce = this.StandardForce,
                 TrueStress = this.TrueStress,
                 PlasticElongation = this.PlasticElongation,
-                XCorrectElongation = this.XCorrectElongation
+                XCorrectElongation = this.XCorrectElongation,
+                L0 = this.L0,
+                Lu = this.Lu,
+                Lc = this.Lc
             };
             return tensileResult;
         }

@@ -31,5 +31,14 @@ namespace ExperimentToolApi.Models
         [Required]
         [DataMember]
         public decimal XCorrectRelativeReduction {get;set;}
+         [Required]
+        [DataMember]
+        public decimal D0 {get;set;}
+        [Required]
+        [DataMember]
+        public decimal H0 {get;set;}
+        [Required]
+        [DataMember]
+        public decimal S0 {get;set;}
     }
 }

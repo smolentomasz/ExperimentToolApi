@@ -5,8 +5,8 @@ namespace ExperimentToolApi.Interfaces
 {
     public interface ICompressionResultRepository
     {
-        CompressionResult Create(CompressionResult newTest);
-        List<CompressionResult> GetListByTest(int testId);
+        void Create(List<CompressionResult> resultsList);
+        List<int> GetListByTest(int testId);
         List<CompressionResult> GetListByAttempt(int attemptNumber, int testId);
         bool isResultForTestPresent(int testId);
         bool isAttemptForTestPresent(int attemptNumber, int testId);
