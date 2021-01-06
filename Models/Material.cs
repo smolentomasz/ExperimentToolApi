@@ -8,19 +8,14 @@ namespace ExperimentToolApi.Models
     {
         [Key]
         [Required]
-        [DataMember]
         public int Id {get;set;}
         [Required]
-        [DataMember]
         public string Name {get;set;}
         [Required]
-        [DataMember]
         public string MaterialPhoto {get;set;}
         [Required]
-        [DataMember]
         public string AdditionalInformations {get;set;}
         [Required]
-        [DataMember]
         public string ChemicalComposition {get;set;}
         [Required]
         public ICollection<TensileTest> TensileTest {get; set;}

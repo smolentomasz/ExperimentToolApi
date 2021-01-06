@@ -27,7 +27,7 @@ namespace ExperimentToolApi.Secure
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Name, user.Username),
                 }),
-                Expires = DateTime.UtcNow.AddHours(10),
+                Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature

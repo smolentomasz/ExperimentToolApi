@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExperimentToolApi.Migrations
 {
     [DbContext(typeof(ExperimentToolDbContext))]
-    [Migration("20201206103208_migrations3.0")]
-    partial class migrations30
+    [Migration("20201218163900_finalMigrations")]
+    partial class finalMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
